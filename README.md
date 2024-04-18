@@ -1,30 +1,44 @@
-# Bootcamp-DS-Proyecto-DS
-#ACTIVIDAD 1
+##COBERTURA MOVIL EN COLOMBIA POR PROVEEDORES DE TELEFONIA, DEPARTAMENTO, MUNICIPIO##
 
-# Dataset 1:REGISTROS SANITARIOS DE DISPOSITIVOS MÉDICOS Y OTRAS TECNOLOGÍAS
-URL:(https://www.datos.gov.co/Salud-y-Protecci-n-Social/REGISTROS-SANITARIOS-DE-DISPOSITIVOS-M-DICOS-Y-OTR/y4qt-w6tk/about_data)
-Razon a elegir: Me interesa poder generar un modelo que permita conocer con tiempo "X" el vencimiento de los registros sanitarios de los Dispositivos Médicos para su pronta actualización
-#Variables de Interes.
-Resgistro Sanitario> Indica el codigo de registro del dispositivo medico
-Fecha de Vecimiento > Es la variable que me indica la fecha de vencimiento de dicho registro.
-Producto > Nombre del producto o del dispositivo medico.
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+import plotly.express as px
+
+##DATASET COBERTURA MOVIL 
+datos= pd.read_csv('CoberturaMovil.csv')
+
+##Columnas
+datos.columns
+
+#DTypes
+datos.dtypes
+
+#Dataframe
+dataframe=pd.DataFrame(datos)
+proveedor=dataframe["PROVEEDOR"].value_counts()
+mun= dataframe["MUNICIPIO"].value_counts()
+dep=dataframe["DEPARTAMENTO"].value_counts().head()
+
+dataframe
+proveedor
+mun
+dep
+
+##GRAFICO 1 Matplotlib
+plt.subplot(1,1,1)
+proveedor.plot(kind="bar", rot=20)
+
+plt.title("PROVEEDOR")
+plt.show()
 
 
-# Dataset 2 : SOCCER RESULTS DATASETS
-URL: https://sports-statistics.com/sports-data/soccer-datasets/
-Razob a elegir: Me interesa poder generar un modelo que permita conocer las estadisticas de un equipo de futbol sobre la temporada regular.
-#Variables de Interes.
-Nombre de Equipo.
-Partidos ganados
-Partidos perdidos
-Partidos empatados
+#Grafico 2 Seaborn
+sns.displot(datos[ "DEPARTAMENTO"])
+plt.show()
 
 
-# Dataset 3 : Cobertura móvil por tecnología, departamento y municipio por proveedor
-URL:https://www.datos.gov.co/Ciencia-Tecnolog-a-e-Innovaci-n/Cobertura-m-vil-por-tecnolog-a-departamento-y-muni/9mey-c8s8/about_data
-Razob a elegir: Me interesa poder generar un modelo que permita conocer la cobertura movil por tecnologia de acuerdo al operador
-#Variables de Interes.
-Operador Movil.
-Tecnologia
-Departamento
-Municipio.
+#Grafico 3 Plotly
+fig = px.line(datos, x = 'PROVEEDOR', y = 'DEPARTAMENTO', title='Cobertura por proveedor en los Departamento de Colombia')
+fig.show()
+
